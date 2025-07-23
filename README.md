@@ -31,8 +31,8 @@ Designed for environmental monitoring, hackathons, and real-world deployment.
 
 ### 1️⃣ Clone the Repository
 ```bash
-git clone https://github.com/<your-username>/ecoairsense.git
-cd ecoairsense
+git clone https://github.com/Chetan-Singh04/Pollution-Prediction-System
+cd Pollution-Prediction-System
 ````
 
 ### 2️⃣ Create and Activate Virtual Environment
