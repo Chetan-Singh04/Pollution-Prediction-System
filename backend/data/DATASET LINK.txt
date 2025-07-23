@@ -1,0 +1,8 @@
+AIR DATASET LINK
+https://www.kaggle.com/datasets/mujtabamatin/air-quality-and-pollution-assessment
+
+WATER DATASET LINK
+https://www.kaggle.com/datasets/uom190346a/water-quality-and-potability
+
+NOISE DATASET LINK
+https://www.kaggle.com/datasets/chrisfilo/urbansound8k
