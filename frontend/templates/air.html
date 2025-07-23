@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-lg border-0 rounded-4">
+            <div class="card-body">
+                <h3 class="card-title text-center mb-4">🌬️ Air Pollution Prediction</h3>
+                
+                <form id="airForm">
+                    <div class="mb-3">
+                        <label for="pm25" class="form-label">PM2.5 (µg/m³)</label>
+                        <div class="input-group">
+                            <span class="input-group-text">🌫️</span>
+                            <input type="number" step="0.01" class="form-control" id="pm25" name="pm25" required placeholder="Enter PM2.5 level">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="pm10" class="form-label">PM10 (µg/m³)</label>
+                        <div class="input-group">
+                            <span class="input-group-text">🌪️</span>
+                            <input type="number" step="0.01" class="form-control" id="pm10" name="pm10" required placeholder="Enter PM10 level">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="no2" class="form-label">NO₂ (ppb)</label>
+                        <div class="input-group">
+                            <span class="input-group-text">🧪</span>
+                            <input type="number" step="0.01" class="form-control" id="no2" name="no2" required placeholder="Enter NO₂ level">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100 fw-bold">🌱 Predict Air Quality</button>
+                </form>
+
+                <div id="airResult" class="alert alert-info mt-4 text-center d-none"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('airForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const data = {
+        pm25: parseFloat(document.getElementById('pm25').value),
+        pm10: parseFloat(document.getElementById('pm10').value),
+        no2: parseFloat(document.getElementById('no2').value)
+    };
+
+    const response = await fetch('http://127.0.0.1:5000/air/predict', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    });
+    const result = await response.json();
+
+    const resultDiv = document.getElementById('airResult');
+    resultDiv.textContent = `Prediction: ${result.prediction}`;
+    resultDiv.classList.remove('d-none');
+    resultDiv.classList.add(result.prediction.includes('Good') ? 'alert-success' : 'alert-danger');
+});
+</script>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-lg rounded-4">
+            <div class="card-body">
+                <h3 class="card-title text-center mb-4">🔊 Noise Pollution Prediction</h3>
+
+                <!-- Drag & Drop Upload Area -->
+                <div id="dropZone" class="border rounded p-4 text-center bg-light mb-3" style="cursor: pointer;">
+                    <p class="mb-2">📥 Drag & drop an audio file here</p>
+                    <p class="text-muted">or click below to select a file</p>
+                    <input type="file" id="audioFile" class="form-control" accept="audio/*">
+                </div>
+
+                <button id="predictBtn" class="btn btn-warning w-100 fw-bold">🔊 Predict Noise Level</button>
+
+                <div id="uploadStatus" class="mt-3 text-center text-muted"></div>
+                <div id="noiseResult" class="alert alert-info mt-3 text-center d-none"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+const dropZone = document.getElementById('dropZone');
+const audioFileInput = document.getElementById('audioFile');
+const predictBtn = document.getElementById('predictBtn');
+const uploadStatus = document.getElementById('uploadStatus');
+const noiseResult = document.getElementById('noiseResult');
+
+// Drag & Drop Styling
+dropZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropZone.classList.add('bg-success', 'text-white');
+});
+dropZone.addEventListener('dragleave', () => {
+    dropZone.classList.remove('bg-success', 'text-white');
+});
+dropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropZone.classList.remove('bg-success', 'text-white');
+    audioFileInput.files = e.dataTransfer.files;
+});
+
+// Predict Button Click
+predictBtn.addEventListener('click', async function () {
+    const file = audioFileInput.files[0];
+    if (!file) {
+        alert("⚠️ Please upload an audio file first!");
+        return;
+    }
+
+    uploadStatus.textContent = "⏳ Uploading and processing audio file...";
+    const formData = new FormData();
+    formData.append('audio', file);
+
+    try {
+        const response = await fetch('/noise/predict', {
+            method: 'POST',
+            body: formData
+        });
+        const result = await response.json();
+
+        noiseResult.textContent = `Prediction: ${result.prediction}`;
+        noiseResult.classList.remove('d-none');
+        noiseResult.classList.add(result.prediction.includes('Safe') ? 'alert-success' : 'alert-danger');
+        uploadStatus.textContent = "";
+    } catch (error) {
+        uploadStatus.textContent = "❌ Error uploading file. Please try again.";
+    }
+});
+</script>
+{% endblock %}

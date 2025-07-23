@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h3 class="text-center mb-4">📊 Historical Pollution Data</h3>
+
+    <!-- Air Pollution Chart -->
+    <div class="card shadow-sm mb-4 rounded-4">
+        <div class="card-body">
+            <h5 class="card-title">🌬️ Air Pollution (PM2.5 Levels)</h5>
+            <canvas id="airChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Water Pollution Chart -->
+    <div class="card shadow-sm mb-4 rounded-4">
+        <div class="card-body">
+            <h5 class="card-title">💧 Water Quality (Safe vs Unsafe)</h5>
+            <canvas id="waterChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Noise Pollution Chart -->
+    <div class="card shadow-sm mb-4 rounded-4">
+        <div class="card-body">
+            <h5 class="card-title">🔊 Noise Levels (Safe vs Unsafe)</h5>
+            <canvas id="noiseChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+// 🌬️ Air Pollution Line Chart
+const airCtx = document.getElementById('airChart').getContext('2d');
+new Chart(airCtx, {
+    type: 'line',
+    data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        datasets: [{
+            label: 'PM2.5 (µg/m³)',
+            data: [35, 42, 58, 40, 47, 33],
+            borderColor: 'rgba(75, 192, 192, 1)',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            fill: true,
+            tension: 0.4
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { display: true, position: 'top' }
+        }
+    }
+});
+
+// 💧 Water Pollution Bar Chart
+const waterCtx = document.getElementById('waterChart').getContext('2d');
+new Chart(waterCtx, {
+    type: 'bar',
+    data: {
+        labels: ['River A', 'River B', 'Lake C', 'Well D'],
+        datasets: [{
+            label: 'Safe Water (%)',
+            data: [70, 50, 80, 60],
+            backgroundColor: [
+                'rgba(54, 162, 235, 0.7)',
+                'rgba(54, 162, 235, 0.7)',
+                'rgba(54, 162, 235, 0.7)',
+                'rgba(54, 162, 235, 0.7)'
+            ]
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { display: false }
+        }
+    }
+});
+
+// 🔊 Noise Pollution Pie Chart
+const noiseCtx = document.getElementById('noiseChart').getContext('2d');
+new Chart(noiseCtx, {
+    type: 'pie',
+    data: {
+        labels: ['Safe', 'Unsafe'],
+        datasets: [{
+            label: 'Noise Levels',
+            data: [65, 35],
+            backgroundColor: [
+                'rgba(75, 192, 192, 0.7)',
+                'rgba(255, 99, 132, 0.7)'
+            ]
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { position: 'bottom' }
+        }
+    }
+});
+</script>
+{% endblock %}

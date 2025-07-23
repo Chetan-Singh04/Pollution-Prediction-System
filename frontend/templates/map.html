@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h3 class="text-center mb-4">🗺️ Regional Pollution Map</h3>
+    
+    <div id="map" style="height: 500px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);"></div>
+</div>
+
+<!-- Google Maps API -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAOVYRIgupAurZup5y1PRh8Ismb1A3lLao&libraries=places&callback=initMap" async defer></script>
+<script>
+function initMap() {
+    // Center map on India
+    const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 5,
+        center: { lat: 22.9734, lng: 78.6569 } // Center of India
+    });
+
+    // Example Pollution Data (replace with backend API later)
+    const pollutionSites = [
+        {
+            position: { lat: 28.7041, lng: 77.1025 }, // Delhi
+            type: "Air",
+            level: "Unsafe",
+            details: "PM2.5: 150 µg/m³ (Very Poor)"
+        },
+        {
+            position: { lat: 19.0760, lng: 72.8777 }, // Mumbai
+            type: "Water",
+            level: "Safe",
+            details: "pH: 7.2, Chloramines: 2.1 ppm"
+        },
+        {
+            position: { lat: 12.9716, lng: 77.5946 }, // Bangalore
+            type: "Noise",
+            level: "Unsafe",
+            details: "Noise Level: 90 dB (Unsafe)"
+        }
+    ];
+
+    pollutionSites.forEach(site => {
+        const markerColor = site.level === "Safe" 
+            ? "http://maps.google.com/mapfiles/ms/icons/green-dot.png" 
+            : "http://maps.google.com/mapfiles/ms/icons/red-dot.png";
+
+        const marker = new google.maps.Marker({
+            position: site.position,
+            map: map,
+            title: `${site.type} Pollution: ${site.level}`,
+            icon: markerColor
+        });
+
+        const infoWindow = new google.maps.InfoWindow({
+            content: `
+                <h6>${site.type} Pollution</h6>
+                <p><strong>Status:</strong> ${site.level}</p>
+                <p>${site.details}</p>
+            `
+        });
+
+        marker.addListener('click', function() {
+            infoWindow.open(map, marker);
+        });
+    });
+}
+</script>
+{% endblock %}
