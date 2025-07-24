@@ -82,19 +82,19 @@ python backend/app.py
 ![Home page](frontend/static/images/Home.png)
 
 ### 🌬️ Air Prediction
-![Air Prediction](frontend\static\images\air-prediction.png)
+![Air Prediction](frontend/static/images/air-prediction.png)
 
 ### 💧 Water Prediction
-![Water Prediction](frontend\static\images\water-prediction.png)
+![Water Prediction](frontend/static/images/water-prediction.png)
 
 ### 🔊 Noise Prediction
-![Noise Prediction](frontend\static\images\noise-prediction.png)
+![Noise Prediction](frontend/static/images/noise-prediction.png)
 
 ### 📊 Charts Page
-![Charts](frontend\static\images\charts.png)
+![Charts](frontend/static/images/charts.png)
 
 ### 🗺️ Map Page
-![Map](frontend\static\images\map.png)
+![Map](frontend/static/images/map.png)
 
 ---
 
