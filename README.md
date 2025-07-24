@@ -79,7 +79,7 @@ python backend/app.py
 ## 📸 Screenshots
 
 ### 🌬️ Home Page
-![Home page](frontend\static\images\Home.png)
+![Home page](frontend/static/images/Home.png)
 
 ### 🌬️ Air Prediction
 ![Air Prediction](frontend\static\images\air-prediction.png)
